@@ -1,8 +1,9 @@
 name: Capricciosa
 category: classic
 order: 3
-description: A generous classic with cooked ham, champignons, artichoke hearts and black olives.
-price30: 245
+description: A generous classic with cooked ham, champignons, artichoke hearts
+  and black olives.
+price30: 249
 price40: 345
 ingredients:
   - Tomato sauce
@@ -13,5 +14,4 @@ ingredients:
   - Kalamata olives
 photo: ../../assets/pizzas/capricciosa/photo.svg
 photoAlt: Capricciosa pizza with ham, mushrooms, artichokes and olives
-labels: []
 available: true
