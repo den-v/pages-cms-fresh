@@ -1,4 +1,4 @@
-name: Forno Rosso
+name: Forno Rosso - 123
 tagline: Wood-fired pizza in the heart of old Lviv
 address: vul. Virmenska 14
 city: Lviv 79008, Ukraine
@@ -38,9 +38,9 @@ hours:
     open: '11:00'
     close: '21:00'
 holidays:
-  - date: 2026-12-25
+  - date: 2026-12-25T00:00:00.000Z
     label: Christmas Day
-  - date: 2027-01-01
+  - date: 2027-01-01T00:00:00.000Z
     label: New Year's Day
-  - date: 2027-01-06
+  - date: 2027-01-06T00:00:00.000Z
     label: Staff holiday
