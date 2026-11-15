@@ -1,0 +1,391 @@
+# Pages CMS — where your clients edit this site's content (app.pagescms.org).
+# Written by Clockheart from src/content.config.ts and the schemas Astro generates.
+# Edit freely: it is yours. Options: https://pagescms.org/docs/configuration/
+media:
+  - name: assets
+    input: src/assets
+    output: ../../assets
+    categories:
+      - image
+content:
+  - name: pizzas
+    label: Pizzas
+    type: collection
+    path: src/content/pizzas
+    format: yaml
+    subfolders: true
+    filename: '{primary}.yaml'
+    view:
+      primary: name
+      fields:
+        - name
+        - category
+        - price30
+        - photo
+    fields:
+      - name: name
+        label: Name
+        required: true
+        type: string
+      - name: category
+        label: Category
+        required: true
+        type: select
+        options:
+          values:
+            - classic
+            - signature
+            - white
+      - name: order
+        label: Order
+        type: number
+        default: 0
+        options:
+          step: 1
+      - name: description
+        label: Description
+        required: true
+        type: text
+      - name: price30
+        label: Price 30
+        required: true
+        type: number
+      - name: price40
+        label: Price 40
+        required: true
+        type: number
+      - name: ingredients
+        label: Ingredients
+        type: string
+        list: true
+      - name: photo
+        label: Photo
+        required: true
+        type: image
+        options:
+          media: assets
+          path: src/assets/pizzas
+      - name: photoAlt
+        label: Photo Alt
+        type: string
+      - name: labels
+        label: Labels
+        type: select
+        options:
+          values:
+            - spicy
+            - vegetarian
+            - new
+          multiple: true
+      - name: available
+        label: Available
+        type: boolean
+        default: true
+  - name: offers
+    label: Offers
+    type: collection
+    path: src/content/offers
+    format: yaml
+    subfolders: true
+    filename: '{primary}.yaml'
+    view:
+      primary: title
+      fields:
+        - title
+        - startDate
+        - endDate
+        - pizza
+    fields:
+      - name: title
+        label: Title
+        required: true
+        type: string
+      - name: description
+        label: Description
+        required: true
+        type: text
+      - name: badge
+        label: Badge
+        type: string
+      - name: startDate
+        label: Start Date
+        required: true
+        type: date
+        options:
+          format: yyyy-MM-dd
+      - name: endDate
+        label: End Date
+        required: true
+        type: date
+        options:
+          format: yyyy-MM-dd
+      - name: pizza
+        label: Pizza
+        type: reference
+        options:
+          collection: pizzas
+          value: '{path}'
+          label: '{fields.name}'
+  - name: reviews
+    label: Reviews
+    type: collection
+    path: src/content/reviews
+    format: yaml
+    subfolders: true
+    filename: '{primary}.yaml'
+    view:
+      primary: author
+      fields:
+        - author
+        - rating
+        - date
+        - approved
+    fields:
+      - name: author
+        label: Author
+        required: true
+        type: string
+      - name: rating
+        label: Rating
+        required: true
+        type: number
+        options:
+          step: 1
+          min: 1
+          max: 5
+      - name: text
+        label: Text
+        required: true
+        type: text
+      - name: date
+        label: Date
+        required: true
+        type: date
+        options:
+          format: yyyy-MM-dd
+      - name: approved
+        label: Approved
+        type: boolean
+        default: false
+  - name: info
+    label: Info
+    type: file
+    path: src/content/site/info.yaml
+    format: yaml
+    fields:
+      - name: name
+        label: Name
+        required: true
+        type: string
+      - name: tagline
+        label: Tagline
+        required: true
+        type: string
+      - name: address
+        label: Address
+        required: true
+        type: string
+      - name: city
+        label: City
+        required: true
+        type: string
+      - name: phone
+        label: Phone
+        required: true
+        type: string
+      - name: email
+        label: Email
+        type: string
+      - name: mapUrl
+        label: Map Url
+        required: true
+        type: string
+      - name: instagram
+        label: Instagram
+        type: string
+      - name: pizzaOfTheWeek
+        label: Pizza Of The Week
+        type: reference
+        options:
+          collection: pizzas
+          value: '{path}'
+          label: '{fields.name}'
+      - name: pizzaOfTheWeekNote
+        label: Pizza Of The Week Note
+        type: text
+      - name: hours
+        label: Hours
+        required: true
+        type: object
+        fields:
+          - name: monday
+            label: Monday
+            required: true
+            type: object
+            fields:
+              - name: closed
+                label: Closed
+                type: boolean
+                default: false
+              - name: open
+                label: Open
+                type: string
+                pattern: ^([01]\d|2[0-3]):[0-5]\d$|^$
+              - name: close
+                label: Close
+                type: string
+                pattern: ^([01]\d|2[0-3]):[0-5]\d$|^$
+          - name: tuesday
+            label: Tuesday
+            required: true
+            type: object
+            fields:
+              - name: closed
+                label: Closed
+                type: boolean
+                default: false
+              - name: open
+                label: Open
+                type: string
+                pattern: ^([01]\d|2[0-3]):[0-5]\d$|^$
+              - name: close
+                label: Close
+                type: string
+                pattern: ^([01]\d|2[0-3]):[0-5]\d$|^$
+          - name: wednesday
+            label: Wednesday
+            required: true
+            type: object
+            fields:
+              - name: closed
+                label: Closed
+                type: boolean
+                default: false
+              - name: open
+                label: Open
+                type: string
+                pattern: ^([01]\d|2[0-3]):[0-5]\d$|^$
+              - name: close
+                label: Close
+                type: string
+                pattern: ^([01]\d|2[0-3]):[0-5]\d$|^$
+          - name: thursday
+            label: Thursday
+            required: true
+            type: object
+            fields:
+              - name: closed
+                label: Closed
+                type: boolean
+                default: false
+              - name: open
+                label: Open
+                type: string
+                pattern: ^([01]\d|2[0-3]):[0-5]\d$|^$
+              - name: close
+                label: Close
+                type: string
+                pattern: ^([01]\d|2[0-3]):[0-5]\d$|^$
+          - name: friday
+            label: Friday
+            required: true
+            type: object
+            fields:
+              - name: closed
+                label: Closed
+                type: boolean
+                default: false
+              - name: open
+                label: Open
+                type: string
+                pattern: ^([01]\d|2[0-3]):[0-5]\d$|^$
+              - name: close
+                label: Close
+                type: string
+                pattern: ^([01]\d|2[0-3]):[0-5]\d$|^$
+          - name: saturday
+            label: Saturday
+            required: true
+            type: object
+            fields:
+              - name: closed
+                label: Closed
+                type: boolean
+                default: false
+              - name: open
+                label: Open
+                type: string
+                pattern: ^([01]\d|2[0-3]):[0-5]\d$|^$
+              - name: close
+                label: Close
+                type: string
+                pattern: ^([01]\d|2[0-3]):[0-5]\d$|^$
+          - name: sunday
+            label: Sunday
+            required: true
+            type: object
+            fields:
+              - name: closed
+                label: Closed
+                type: boolean
+                default: false
+              - name: open
+                label: Open
+                type: string
+                pattern: ^([01]\d|2[0-3]):[0-5]\d$|^$
+              - name: close
+                label: Close
+                type: string
+                pattern: ^([01]\d|2[0-3]):[0-5]\d$|^$
+      - name: holidays
+        label: Holidays
+        type: object
+        fields:
+          - name: date
+            label: Date
+            required: true
+            type: date
+            options:
+              format: yyyy-MM-dd
+          - name: label
+            label: Label
+            type: string
+        list: true
+  - name: history
+    label: History
+    type: file
+    path: src/content/site/history.yaml
+    format: yaml
+    fields:
+      - name: title
+        label: Title
+        required: true
+        type: string
+      - name: intro
+        label: Intro
+        required: true
+        type: text
+      - name: milestones
+        label: Milestones
+        type: object
+        fields:
+          - name: year
+            label: Year
+            required: true
+            type: number
+            options:
+              step: 1
+          - name: title
+            label: Title
+            required: true
+            type: string
+          - name: text
+            label: Text
+            required: true
+            type: string
+        list: true
+settings:
+  content:
+    merge: true
+  commit:
+    identity: user

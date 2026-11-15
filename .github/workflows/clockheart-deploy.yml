@@ -1,0 +1,30 @@
+# Written by Clockheart. Builds the site whenever main changes — a client's
+# save in Pages CMS or a Publish from Clockheart — and puts it live on Cloudflare.
+# The Cloudflare key is a repo secret (Settings → Secrets and variables → Actions).
+name: Build and publish
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+concurrency:
+  group: publish
+  cancel-in-progress: true
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx astro build
+      - name: Put it live on Cloudflare
+        if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
+        # The commit id, never its message: a message is text anyone with write
+        # access chose, and pasting it into a shell line would run it.
+        run: npx --yes wrangler@4 deploy ./dist --name pages-cms-fresh --compatibility-date 2026-11-15 --message "${{ github.sha }}"
